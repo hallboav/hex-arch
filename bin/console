@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
+if (!extension_loaded('pdo_mysql')) {
+	die('Extensão pdo_mysql está ausente');
+}
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$paths = [__DIR__ . '/../config/doctrine/'];
+$isDevMode = true;
+
+// the connection configuration
+$dbParams = [
+    'driver'   => 'pdo_mysql',
+    'user'     => 'root',
+    'password' => 'root',
+    'dbname'   => 'hex_arch',
+];
+
+$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode);
+$entityManager = EntityManager::create($dbParams, $config);
+
+use App\Domain\Partido;
+use App\Domain\Candidato;
+use App\Domain\Eleitor;
+
+// $repositorioVoto = ?
+
+$partido = new Partido(222. 'Baz');
+$entityManager->persist($partido);
+$entityManager->flush();
+
+
+
+// $candidato = new Candidato(1, 'Foo', $partido);
+
+// $eleitor = new Eleitor(1, 'Bar', $repositorioVoto);
+// $eleitor->votar($candidato);
+
+// // throw exception
+// $eleitor->votar($candidato);
